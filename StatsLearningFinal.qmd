@@ -98,7 +98,7 @@ kable(variable_groups,
 Hierarchical clustering helps us identify natural groupings within positions based on statistical similarities. The process works by id identifies the two positions with the most similar performance metrics, groups them together, and repeats this process until all positions are connected in a tree-like structure. The height of connections in our dendrogram shows the degree of difference between positions - higher connections indicate bigger statistical differences in performance metrics.
 
 ```{r}
-pl_data<- read_csv("/Users/anweshanadhikari/Desktop/SLFinal/processed_data.csv")
+pl_data<- read_csv("processed_data.csv")
 
 position_summary <- pl_data %>%
   group_by(main_position) %>%
@@ -360,7 +360,8 @@ conf_matrix_df <- as.data.frame(as.table(test_conf))
 names(conf_matrix_df) <- c("Predicted", "Actual", "Count")
 
 conf_matrix <- confusionMatrix(data = factor(test_pred), 
-                             reference = factor(test_data$main_position))
+                             reference = 
+                               factor(test_data$main_position))
 
 ggplot(conf_matrix_df, aes(x = Actual, y = Predicted, fill = Count)) +
   geom_tile() +
@@ -434,7 +435,8 @@ modelrf <- train(factor(main_position) ~ .,
 soccer_data_pred1 <- soccer_test_data |> 
   mutate(predicted_position = predict(modelrf, newdata = soccer_test_data))
 
-c<-confusionMatrix(data = as.factor(soccer_data_pred1$predicted_position), reference = as.factor(soccer_data_pred1$main_position))
+c<-confusionMatrix(data = as.factor(soccer_data_pred1$predicted_position), 
+                   reference = as.factor(soccer_data_pred1$main_position))
 ```
 ## Ranger
 ```{r}
@@ -448,7 +450,8 @@ modelrang <- train(factor(main_position) ~ .,
 soccer_data_pred2 <- soccer_test_data |> 
   mutate(predicted_position = predict(modelrang, newdata = soccer_test_data))
 
-c<-confusionMatrix(data = as.factor(soccer_data_pred2$predicted_position), reference = as.factor(soccer_data_pred2$main_position))
+c<-confusionMatrix(data = as.factor(soccer_data_pred2$predicted_position), 
+                   reference = as.factor(soccer_data_pred2$main_position))
 ```
 ## K-nearest neighbor
 ```{r}
@@ -466,7 +469,8 @@ modelknn <- train(factor(main_position) ~ .,
 soccer_data_pred3 <- soccer_test_data_scaled |> 
   mutate(predicted_position = predict(modelknn, newdata = soccer_test_data_scaled))
 
-c<-confusionMatrix(data = as.factor(soccer_data_pred3$predicted_position), reference = as.factor(soccer_data_pred3$main_position))
+c<-confusionMatrix(data = as.factor(soccer_data_pred3$predicted_position), 
+                   reference = as.factor(soccer_data_pred3$main_position))
 ```
 
 ## Treebag
@@ -479,7 +483,8 @@ modeltree <- train(factor(main_position) ~ .,
 soccer_data_pred4 <- soccer_test_data |> 
   mutate(predicted_position = predict(modeltree, newdata = soccer_test_data))
 
-c<-confusionMatrix(data = as.factor(soccer_data_pred4$predicted_position), reference = as.factor(soccer_data_pred4$main_position))
+c<-confusionMatrix(data = as.factor(soccer_data_pred4$predicted_position), 
+                   reference = as.factor(soccer_data_pred4$main_position))
 ```
 
 ## LDA
@@ -493,7 +498,8 @@ modellda <- train(factor(main_position) ~ .,
 soccer_data_pred5 <- soccer_test_data |> 
   mutate(predicted_position = predict(modellda, newdata = soccer_test_data))
 
-c<-confusionMatrix(data = as.factor(soccer_data_pred5$predicted_position), reference = as.factor(soccer_data_pred5$main_position))
+c<-confusionMatrix(data = as.factor(soccer_data_pred5$predicted_position), 
+                   reference = as.factor(soccer_data_pred5$main_position))
 ```
 # Supervised Learning Comparison
 ```{r}
@@ -555,7 +561,7 @@ The Ranger Model was the most accurate model in terms of predicting a player's p
 
 The table output shows players that were not correctly identified by any of their positions, which could indicate either model limitations or, more interestingly, players whose statistical profiles suggest untapped positional versatility. Our analysis suggests that while machine learning can help identify positional patterns, the fluidity of modern football makes strict positional classification challenging - a finding supported by both our supervised and unsupervised learning approaches.
 
-
+\newpage
 
 # Conclusion
 
